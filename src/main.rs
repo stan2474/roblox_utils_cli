@@ -9,6 +9,7 @@ use chrono::Utc;
 use std::io::Cursor;
 use std::error::Error;
 use rbx_types::Content;
+use encoding_rs::WINDOWS_1252;
 mod error;
 mod filemesh;
 mod importer;
@@ -294,10 +295,19 @@ fn fix_place(
 ) -> Result<Vec<u8>, Box<dyn Error>> {
     let start = Utc::now();
     let is_binary_input = is_binary_rbxl(input_bytes);
-    let mut reader = Cursor::new(input_bytes);
     let mut dom: WeakDom = if is_binary_input {
+        let mut reader = Cursor::new(input_bytes);
         from_reader(&mut reader).map_err(|e| Box::<dyn Error>::from(e.to_string()))?
     } else {
+        // fix for some saveinstances
+        let xml_str = match String::from_utf8(input_bytes.to_vec()) {
+            Ok(s) => s,
+            Err(_) => {
+                let (cow, _, _) = WINDOWS_1252.decode(input_bytes);
+                cow.into_owned()
+            }
+        };
+        let mut reader = Cursor::new(xml_str.as_bytes());
         from_reader_default(&mut reader).map_err(|e| Box::<dyn Error>::from(e.to_string()))?
     };
     let mappings = instance_mappings.unwrap_or_default();
