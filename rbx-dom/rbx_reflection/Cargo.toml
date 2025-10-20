@@ -1,0 +1,21 @@
+[package]
+name = "rbx_reflection"
+description = "Roblox reflection database and ambiguous type resolution"
+version = "6.0.0"
+license = "MIT"
+documentation = "https://docs.rs/rbx_reflection"
+homepage = "https://github.com/rojo-rbx/rbx-dom"
+repository = "https://github.com/rojo-rbx/rbx-dom.git"
+readme = "README.md"
+authors = [
+    "Lucien Greathouse <me@lpghatguy.com>",
+    "Micah Reid <git@dekkonot.com>",
+    "Ken Loeffler <kenloef@gmail.com>",
+]
+edition = "2018"
+
+[dependencies]
+rbx_types = { version = "3.0.0", path = "../rbx_types", features = ["serde"] }
+
+serde = { version = "1.0.137", features = ["derive"] }
+thiserror = "1.0.31"

@@ -1,0 +1,53 @@
+Change:
+  Instance:
+    # UniqueId is randomized per Studio load, but that's not a useful default.
+    # Rather than getting the default from Studio, we manually specify it here
+    # instead. The all-zero UniqueId can appear in files multiple times so it's
+    # the only default value that makes sense.
+    UniqueId:
+      DefaultValue:
+        UniqueId: "00000000000000000000000000000000"
+    HistoryId:
+      DefaultValue:
+        UniqueId: "00000000000000000000000000000000"
+
+    archivable:
+      AliasFor: Archivable
+    Archivable:
+      Serialization:
+        Type: SerializesAs
+        As: archivable
+      # Archivable has no default value recorded but we need it to be true
+      DefaultValue:
+        Bool: true
+
+    # DefinesCapabilities is exposed as `Sandboxed` in Roblox Studio, so we want
+    # it as an alias.
+    DefinesCapabilities:
+      AliasFor: Sandboxed
+    Sandboxed:
+      Serialization:
+        Type: SerializesAs
+        As: DefinesCapabilities
+
+    # Setting capabilities is beyond our ability right now so we're going to
+    # ignore it.
+    Capabilities:
+      Scriptability: None
+
+    # Attributes serialize as a BinaryString with a strange name, but we want to
+    # refer to them with a different name.
+    Attributes:
+      DataType:
+        Value: "Attributes"
+      Serialization:
+        Type: SerializesAs
+        As: AttributesSerialize
+      Scriptability: Custom
+    AttributesSerialize:
+      AliasFor: Attributes
+
+    Tags:
+      DataType:
+        Value: "Tags"
+      Scriptability: Custom

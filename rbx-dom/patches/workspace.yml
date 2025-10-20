@@ -1,0 +1,12 @@
+Change:
+  Workspace:
+    SignalBehavior:
+      Serialization:
+        Type: SerializesAs
+        As: SignalBehavior2
+    SignalBehavior2:
+      AliasFor: SignalBehavior
+
+    CollisionGroups:
+      Serialization:
+        Type: Serializes

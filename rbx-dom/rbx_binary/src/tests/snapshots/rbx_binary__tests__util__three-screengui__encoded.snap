@@ -1,0 +1,106 @@
+---
+source: rbx_binary/src/tests/util.rs
+expression: text_roundtrip
+---
+num_types: 1
+num_instances: 3
+chunks:
+  - Inst:
+      type_id: 0
+      type_name: ScreenGui
+      object_format: 0
+      referents:
+        - 0
+        - 1
+        - 2
+  - Prop:
+      type_id: 0
+      prop_name: AttributesSerialize
+      prop_type: String
+      values:
+        - ""
+        - ""
+        - ""
+  - Prop:
+      type_id: 0
+      prop_name: AutoLocalize
+      prop_type: Bool
+      values:
+        - true
+        - true
+        - true
+  - Prop:
+      type_id: 0
+      prop_name: DisplayOrder
+      prop_type: Int32
+      values:
+        - 0
+        - 1
+        - 2
+  - Prop:
+      type_id: 0
+      prop_name: Enabled
+      prop_type: Bool
+      values:
+        - true
+        - true
+        - true
+  - Prop:
+      type_id: 0
+      prop_name: Name
+      prop_type: String
+      values:
+        - DisplayOrder0
+        - DisplayOrder1
+        - DisplayOrder2
+  - Prop:
+      type_id: 0
+      prop_name: ResetOnSpawn
+      prop_type: Bool
+      values:
+        - true
+        - true
+        - true
+  - Prop:
+      type_id: 0
+      prop_name: RootLocalizationTable
+      prop_type: Ref
+      values:
+        - -1
+        - -1
+        - -1
+  - Prop:
+      type_id: 0
+      prop_name: ScreenInsets
+      prop_type: Enum
+      values:
+        - 2
+        - 2
+        - 2
+  - Prop:
+      type_id: 0
+      prop_name: Tags
+      prop_type: String
+      values:
+        - ""
+        - ""
+        - ""
+  - Prop:
+      type_id: 0
+      prop_name: ZIndexBehavior
+      prop_type: Enum
+      values:
+        - 1
+        - 1
+        - 1
+  - Prnt:
+      version: 0
+      links:
+        - - 0
+          - -1
+        - - 1
+          - -1
+        - - 2
+          - -1
+  - End
+

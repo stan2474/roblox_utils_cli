@@ -1,0 +1,241 @@
+---
+source: rbx_binary/src/tests/util.rs
+expression: text_decoded
+---
+num_types: 1
+num_instances: 3
+chunks:
+  - Meta:
+      entries:
+        - - ExplicitAutoJoints
+          - "true"
+  - Sstr:
+      version: 0
+      entries:
+        - len: 0
+          hash: af1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262
+  - Inst:
+      type_id: 0
+      type_name: Model
+      object_format: 0
+      referents:
+        - 0
+        - 1
+        - 2
+  - Prop:
+      type_id: 0
+      prop_name: AttributesSerialize
+      prop_type: String
+      values:
+        - ""
+        - ""
+        - ""
+  - Prop:
+      type_id: 0
+      prop_name: LevelOfDetail
+      prop_type: Enum
+      values:
+        - 0
+        - 0
+        - 0
+  - Prop:
+      type_id: 0
+      prop_name: ModelInPrimary
+      prop_type: CFrame
+      values:
+        - position:
+            - 0
+            - 0
+            - 0
+          orientation:
+            - - 1
+              - 0
+              - 0
+            - - 0
+              - 1
+              - 0
+            - - 0
+              - 0
+              - 1
+        - position:
+            - 0
+            - 0
+            - 0
+          orientation:
+            - - 1
+              - 0
+              - 0
+            - - 0
+              - 1
+              - 0
+            - - 0
+              - 0
+              - 1
+        - position:
+            - 0
+            - 0
+            - 0
+          orientation:
+            - - 1
+              - 0
+              - 0
+            - - 0
+              - 1
+              - 0
+            - - 0
+              - 0
+              - 1
+  - Prop:
+      type_id: 0
+      prop_name: ModelMeshCFrame
+      prop_type: CFrame
+      values:
+        - position:
+            - 0
+            - 0
+            - 0
+          orientation:
+            - - 1
+              - 0
+              - 0
+            - - 0
+              - 1
+              - 0
+            - - 0
+              - 0
+              - 1
+        - position:
+            - 0
+            - 0
+            - 0
+          orientation:
+            - - 1
+              - 0
+              - 0
+            - - 0
+              - 1
+              - 0
+            - - 0
+              - 0
+              - 1
+        - position:
+            - 0
+            - 0
+            - 0
+          orientation:
+            - - 1
+              - 0
+              - 0
+            - - 0
+              - 1
+              - 0
+            - - 0
+              - 0
+              - 1
+  - Prop:
+      type_id: 0
+      prop_name: ModelMeshData
+      prop_type: SharedString
+      values:
+        - 0
+        - 0
+        - 0
+  - Prop:
+      type_id: 0
+      prop_name: ModelMeshSize
+      prop_type: Vector3
+      values:
+        - - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 0
+  - Prop:
+      type_id: 0
+      prop_name: Name
+      prop_type: String
+      values:
+        - None
+        - Some
+        - SomeInfNaN
+  - Prop:
+      type_id: 0
+      prop_name: NeedsPivotMigration
+      prop_type: Bool
+      values:
+        - false
+        - false
+        - false
+  - Prop:
+      type_id: 0
+      prop_name: PrimaryPart
+      prop_type: Ref
+      values:
+        - -1
+        - -1
+        - -1
+  - Prop:
+      type_id: 0
+      prop_name: SourceAssetId
+      prop_type: Int64
+      values:
+        - -1
+        - -1
+        - -1
+  - Prop:
+      type_id: 0
+      prop_name: Tags
+      prop_type: String
+      values:
+        - ""
+        - ""
+        - ""
+  - Prop:
+      type_id: 0
+      prop_name: WorldPivotData
+      prop_type: OptionalCFrame
+      values:
+        - ~
+        - position:
+            - 1
+            - -1
+            - 0.5
+          orientation:
+            - - 0.06294725
+              - 0.403198
+              - 0.9129453
+            - - 0.75241846
+              - -0.6201453
+              - 0.22200526
+            - - 0.65567076
+              - 0.6729422
+              - -0.34241003
+        - position:
+            - -0.5
+            - inf
+            - NaN
+          orientation:
+            - - 1
+              - 0
+              - 0
+            - - 0
+              - 1
+              - 0
+            - - 0
+              - 0
+              - 1
+  - Prnt:
+      version: 0
+      links:
+        - - 0
+          - -1
+        - - 1
+          - -1
+        - - 2
+          - -1
+  - End
+

@@ -1,0 +1,48 @@
+---
+source: rbx_binary/src/tests/serializer.rs
+expression: decoded
+---
+num_types: 1
+num_instances: 3
+chunks:
+  - Inst:
+      type_id: 0
+      type_name: Part
+      object_format: 0
+      referents:
+        - 0
+        - 1
+        - 2
+  - Prop:
+      type_id: 0
+      prop_name: Name
+      prop_type: String
+      values:
+        - Part
+        - Part
+        - Part
+  - Prop:
+      type_id: 0
+      prop_name: size
+      prop_type: Vector3
+      values:
+        - - 1
+          - 2
+          - 3
+        - - 4
+          - 5
+          - 6
+        - - 4
+          - 1.2
+          - 2
+  - Prnt:
+      version: 0
+      links:
+        - - 0
+          - -1
+        - - 1
+          - -1
+        - - 2
+          - -1
+  - End
+

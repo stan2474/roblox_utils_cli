@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - master
+
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  validate:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ok-nick/setup-aftman@v0.4.2
+
+      - name: Validate Crate Versions
+        run: lune run validate-crate-versions
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        rust_version: [stable]
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        submodules: true
+
+    - name: Setup Rust toolchain
+      run: |
+        rustup default ${{ matrix.rust_version }}
+        rustup component add rustfmt
+
+    - name: Build
+      run: cargo build --verbose
+
+    - name: Run tests
+      run: cargo test --verbose
+
+    - name: Build (all features)
+      run: cargo build --all-features --verbose
+
+    - name: Run tests (all features)
+      run: cargo test --all-features --verbose
+
+    - name: Check Formatting (stable only)
+      run: cargo fmt -- --check
+      if: matrix.rust_version == 'stable'

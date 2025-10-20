@@ -1,0 +1,15 @@
+Change:
+  WeldConstraint:
+    Part0:
+      Serialization:
+        Type: SerializesAs
+        As: Part0Internal
+    Part0Internal:
+      AliasFor: Part0
+
+    Part1:
+      Serialization:
+        Type: SerializesAs
+        As: Part1Internal
+    Part1Internal:
+      AliasFor: Part1

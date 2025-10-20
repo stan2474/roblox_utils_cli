@@ -1,0 +1,106 @@
+//! Describes conversions that are allowed when deserializing properties from
+//! the XML format.
+
+use std::borrow::{Borrow, Cow};
+use std::convert::TryInto;
+
+use rbx_dom_weak::types::{Content, Color3, Enum};
+use rbx_dom_weak::{
+    types::{Attributes, BrickColor, MaterialColors, Tags, Variant, VariantType},
+    Ustr,
+};
+
+pub trait ConvertVariant: Clone + Sized {
+    fn try_convert(self, class_name: Ustr, target_type: VariantType) -> Result<Self, String> {
+        Self::try_convert_cow(class_name, Cow::Owned(self), target_type)
+            .map(|value| value.into_owned())
+    }
+
+    fn try_convert_ref(
+        &self,
+        class_name: Ustr,
+        target_type: VariantType,
+    ) -> Result<Cow<'_, Self>, String> {
+        Self::try_convert_cow(class_name, Cow::Borrowed(self), target_type)
+    }
+
+    fn try_convert_cow(
+        class_name: Ustr,
+        value: Cow<'_, Self>,
+        target_type: VariantType,
+    ) -> Result<Cow<'_, Self>, String>;
+}
+
+impl ConvertVariant for Variant {
+    fn try_convert_cow(
+        class_name: Ustr,
+        value: Cow<'_, Self>,
+        target_type: VariantType,
+    ) -> Result<Cow<'_, Self>, String> {
+        match (value.borrow(), target_type) {
+            // Older files may not have their number types moved to 64-bit yet,
+            // which can cause problems. See issue #301.
+            (Variant::Int32(value), VariantType::BrickColor) => {
+                let narrowed: u16 = (*value).try_into().map_err(|_| {
+                    format!("Value {value} is not in the range of a valid BrickColor")
+                })?;
+
+                BrickColor::from_number(narrowed)
+                    .ok_or_else(|| format!("{value} is not a valid BrickColor number"))
+                    .map(Into::into)
+                    .map(Cow::Owned)
+            }
+            (Variant::Color3uint8(value), VariantType::Color3) => {
+                Ok(Cow::Owned(Color3::from(*value).into()))
+            }
+            (Variant::BinaryString(value), VariantType::Tags) => Ok(Cow::Owned(
+                Tags::decode(value.as_ref())
+                    .map_err(|_| "Tags contain invalid UTF-8")?
+                    .into(),
+            )),
+            (Variant::BinaryString(value), VariantType::Attributes) => {
+                let bytes: &[u8] = value.as_ref();
+                match Attributes::from_reader(bytes) {
+                    Ok(attributes) => Ok(Cow::Owned(attributes.into())),
+                    Err(err) => {
+                        log::warn!(
+                            "Failed to parse Attributes on {class_name} because {err:?}; falling back to BinaryString.
+
+rbx-dom may require changes to fully support this property. Please open an issue at https://github.com/rojo-rbx/rbx-dom/issues and show this warning."
+                        );
+
+                        Ok(Cow::Owned(value.clone().into()))
+                    }
+                }
+            }
+            (Variant::BinaryString(value), VariantType::MaterialColors) => {
+                match MaterialColors::decode(value.as_ref()) {
+                    Ok(material_colors) => Ok(Cow::Owned(material_colors.into())),
+                    Err(err) => {
+                        log::warn!(
+                            "Failed to parse MaterialColors on {class_name} because {err:?}; falling back to BinaryString.
+
+rbx-dom may require changes to fully support this property. Please open an issue at https://github.com/rojo-rbx/rbx-dom/issues and show this warning."
+                        );
+
+                        Ok(Cow::Owned(value.clone().into()))
+                    }
+                }
+            }
+            (Variant::EnumItem(enum_item), VariantType::Enum) => {
+                Ok(Cow::Owned(Enum::from_u32(enum_item.value).into()))
+            }
+            (Variant::ContentId(content_id), VariantType::Content) => {
+                let uri = content_id.as_str();
+                let content = if uri.is_empty() {
+                    Content::none()
+                } else {
+                    Content::from_uri(uri)
+                };
+
+                Ok(Cow::Owned(content.into()))
+            }
+            (_, _) => Ok(value),
+        }
+    }
+}

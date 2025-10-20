@@ -1,0 +1,10 @@
+Change:
+  PackageLink:
+    PackageId:
+      Serialization:
+        Type: SerializesAs
+        As: PackageIdSerialize
+    PackageIdSerialize:
+      AliasFor: PackageId
+    SerializedDefaultAttributes:
+      Scriptability: None

@@ -1,0 +1,28 @@
+[package]
+name = "rbx_reflection_database"
+description = "Bundled reflection database for Roblox projects"
+version = "2.0.0+roblox-694"
+license = "MIT"
+documentation = "https://docs.rs/rbx_reflection_database"
+homepage = "https://github.com/rojo-rbx/rbx-dom"
+repository = "https://github.com/rojo-rbx/rbx-dom.git"
+readme = "README.md"
+authors = [
+    "Lucien Greathouse <me@lpghatguy.com>",
+    "Micah Reid <git@dekkonot.com>",
+    "Ken Loeffler <kenloef@gmail.com>",
+]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+debug_always_use_bundled = []
+
+[dependencies]
+rbx_reflection = { version = "6.0.0", path = "../rbx_reflection" }
+
+serde = "1.0.137"
+rmp-serde = "1.1.1"
+dirs = "5.0.1"
+log = "0.4.20"

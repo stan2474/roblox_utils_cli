@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+members = [
+	"rbx_binary",
+	"rbx_dom_weak",
+	"rbx_reflector",
+	"rbx_reflection",
+	"rbx_reflection_database",
+	"rbx_types",
+	"rbx_xml",
+	"rbx_util",
+]

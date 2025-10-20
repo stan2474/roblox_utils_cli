@@ -1,0 +1,23 @@
+---
+source: rbx_binary/src/tests/util.rs
+assertion_line: 33
+expression: decoded_viewed
+---
+- referent: referent-0
+  name: Bloom
+  class: BloomEffect
+  properties:
+    Attributes:
+      Attributes: {}
+    Enabled:
+      Bool: true
+    Intensity:
+      Float32: 0.45
+    Size:
+      Float32: 24.7
+    Tags:
+      Tags: []
+    Threshold:
+      Float32: 2.285
+  children: []
+

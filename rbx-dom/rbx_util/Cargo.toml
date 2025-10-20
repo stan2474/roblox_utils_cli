@@ -1,0 +1,36 @@
+[package]
+name = "rbx_util"
+version = "0.2.1"
+description = "Utilities for working with Roblox model and place files"
+license = "MIT"
+documentation = "https://docs.rs/rbx_util"
+homepage = "https://github.com/rojo-rbx/rbx-dom"
+repository = "https://github.com/rojo-rbx/rbx-dom.git"
+authors = [
+    "Lucien Greathouse <me@lpghatguy.com>",
+    "Micah Reid <git@dekkonot.com>",
+    "Ken Loeffler <kenloef@gmail.com>",
+]
+edition = "2018"
+readme = "README.md"
+
+# This tool is not even close to ready for primetime!
+publish = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+path = "src/main.rs"
+name = "rbx-util"
+
+[dependencies]
+rbx_binary = { path = "../rbx_binary", features = ["unstable_text_format"] }
+rbx_xml = { path = "../rbx_xml" }
+
+serde_yaml = "0.8.24"
+clap = { version = "4.5.4", features = ["derive"] }
+
+fs-err = "2.7.0"
+anyhow = "1.0.57"
+env_logger = "0.11.3"
+log = "0.4.21"
