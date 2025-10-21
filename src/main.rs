@@ -38,12 +38,16 @@ enum Commands {
     ObjToFilemesh {
         input: PathBuf,
         output: PathBuf,
-        #[arg(value_enum, default_value_t = RobloxMeshVersion::V2_00)]
         version: RobloxMeshVersion,
     },
     FilemeshToObj {
         input: PathBuf,
         output: PathBuf,
+    },
+    FilemeshToFilemesh {
+        input: PathBuf,
+        output: PathBuf,
+        version: RobloxMeshVersion,
     },
     FixPlace {
         input: PathBuf,
@@ -73,6 +77,7 @@ fn is_binary_rbxl(bytes: &[u8]) -> bool {
     bytes.starts_with(&MAGIC)
 }
 
+// todo: merge with serialize_mesh and make an arg determine which to do
 fn convert_obj_to_filemesh(obj_data: &[u8], version: RobloxMeshVersion) -> error::Result<Vec<u8>> {
     let mesh = importer::obj_to_intermediate(obj_data)?;
     let bytes = match version {
@@ -85,6 +90,18 @@ fn convert_obj_to_filemesh(obj_data: &[u8], version: RobloxMeshVersion) -> error
     };
     Ok(bytes)
 }
+fn serialize_mesh(mesh: &mesh_types::IntermediateMesh, version: RobloxMeshVersion) -> error::Result<Vec<u8>> {
+    let bytes = match version {
+        RobloxMeshVersion::V1_00 => ser::write_v1(mesh, ser::V1Version::V1_00)?,
+        RobloxMeshVersion::V1_01 => ser::write_v1(mesh, ser::V1Version::V1_01)?,
+        RobloxMeshVersion::V2_00 => ser::write_v2(mesh)?,
+        RobloxMeshVersion::V3_00 => ser::write_v3(mesh)?,
+        RobloxMeshVersion::V4_00 => ser::write_v4(mesh)?,
+        RobloxMeshVersion::V5_00 => ser::write_v5(mesh)?,
+    };
+    Ok(bytes)
+}
+
 
 fn convert_filemesh_to_obj(filemesh_data: &[u8]) -> error::Result<Vec<u8>> {
     filemesh::filemesh_to_obj_bytes(filemesh_data)
@@ -344,6 +361,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Commands::FilemeshToObj { input, output } => {
             let data = fs::read(input)?;
             let bytes = convert_filemesh_to_obj(&data)?;
+            fs::write(output, bytes)?;
+        }
+        Commands::FilemeshToFilemesh { input, output, version } => {
+            let data = fs::read(input)?;
+            let mesh = filemesh::parse_filemesh(&data)?;
+            let bytes = serialize_mesh(&mesh, version)?;
             fs::write(output, bytes)?;
         }
         Commands::FixPlace {
